@@ -78,7 +78,7 @@ jobs:
         mkdir -p qt-host qt-raspi qthost-build qtpi-build
         git clone https://codereview.qt-project.org/qt/qt5
         cd qt5
-        git checkout 6.5.1
+        git checkout 6.8.0
         perl init-repository -f
         cd ..
         mkdir qt-hostbuild
@@ -90,7 +90,7 @@ jobs:
     - name: '🏗 Build Qt for Target'
       run: |
         cd $HOME/qtpi-build
-        cmake ../qt5/ -Wno-dev -GNinja -DCMAKE_BUILD_TYPE=Release -DINPUT_opengl=es2 -DQT_BUILD_EXAMPLES=OFF -DQT_BUILD_TESTS=OFF -DQT_HOST_PATH=$HOME/qt-host -DCMAKE_STAGING_PREFIX=$HOME/qt-raspi -DCMAKE_INSTALL_PREFIX=/usr/local/qt6 -DCMAKE_TOOLCHAIN_FILE=$HOME/toolchain.cmake -DQT_QMAKE_TARGET_MKSPEC=devices/linux-rasp-pi4-aarch64 -DQT_FEATURE_xcb=ON -DFEATURE_xcb_xlib=ON -DQT_FEATURE_xlib=ON
+        cmake ../qt5/ -Wno-dev -GNinja -DCMAKE_BUILD_TYPE=Release -DINPUT_opengl=es2 -DQT_BUILD_EXAMPLES=OFF -DQT_BUILD_TESTS=OFF -DQT_HOST_PATH=$HOME/qt-host -DCMAKE_STAGING_PREFIX=$HOME/qt-raspi -DCMAKE_INSTALL_PREFIX=/usr/local/qt6 -DCMAKE_TOOLCHAIN_FILE=$HOME/toolchain.cmake -DQT_QMAKE_TARGET_MKSPEC=devices/linux-rasp-pi4-aarch64 -DQT_FEATURE_xcb=ON -DFEATURE_xcb_xlib=ON -DQT_FEATURE_xlib=ON -DFEATURE_dbus=OFF -DBUILD_qtwebchannel=OFF -DBUILD_qtwebengine=OFF -DQT_FEATURE_opengles2=ON -DQT_FEATURE_opengles3=ON -DQT_FEATURE_eglfs=ON -DQT_QPA_DEFAULT_PLATFORM=eglfs
         cmake --build . --parallel 4
         cmake --install .
 
